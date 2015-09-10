@@ -69,11 +69,11 @@ class CPagination extends CComponent
 	/**
 	 * The default page size.
 	 */
-	const DEFAULT_PAGE_SIZE=10;
+	const DEFAULT_PAGE_SIZE=10; //默认是页面显示数是10
 	/**
 	 * @var string name of the GET variable storing the current page index. Defaults to 'page'.
 	 */
-	public $pageVar='page';
+	public $pageVar='page'; //分页变量
 	/**
 	 * @var string the route (controller ID and action ID) for displaying the paged contents.
 	 * Defaults to empty string, meaning using the current route.
@@ -94,11 +94,11 @@ class CPagination extends CComponent
 	 * Defaults to true.
 	 * @since 1.1.4
 	 */
-	public $validateCurrentPage=true;
+	public $validateCurrentPage=true;   //是否验证当前页码超过总页数
 
-	private $_pageSize=self::DEFAULT_PAGE_SIZE;
-	private $_itemCount=0;
-	private $_currentPage;
+	private $_pageSize=self::DEFAULT_PAGE_SIZE; //页面显示记录数
+	private $_itemCount=0;  //总记录数
+	private $_currentPage;  //当前页码：从0开始计数
 
 	/**
 	 * Constructor.
@@ -110,6 +110,7 @@ class CPagination extends CComponent
 	}
 
 	/**
+         * 为外部访问私有属性_pageSize提供的接口$pages->pageSize = 10;
 	 * @return integer number of items in each page. Defaults to 10.
 	 */
 	public function getPageSize()
@@ -118,6 +119,7 @@ class CPagination extends CComponent
 	}
 
 	/**
+         * 为外部设置私有属性_pageSize提供的接口$page = $pages->pageSize
 	 * @param integer $value number of items in each page
 	 */
 	public function setPageSize($value)
@@ -214,7 +216,7 @@ class CPagination extends CComponent
 	public function applyLimit($criteria)
 	{
 		$criteria->limit=$this->getLimit();
-		$criteria->offset=$this->getOffset();
+		$criteria->offset=$this->getOffset();   ////(page-1)*pageSize
 	}
 
 	/**
@@ -224,6 +226,7 @@ class CPagination extends CComponent
 	 */
 	public function getOffset()
 	{
+                //(page-1)*pageSize
 		return $this->getCurrentPage()*$this->getPageSize();
 	}
 
