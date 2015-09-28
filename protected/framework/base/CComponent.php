@@ -89,7 +89,7 @@
 class CComponent
 {
 	private $_e;    #事件句柄容器：观察者模式   可以看作一个hash 表，hash 表的key 是事件的名称，hash 表的value 是事件处理函数链表。
-	private $_m;
+	private $_m;    #行为
 
 	/**
 	 * Returns a property value, an event handler list or a behavior based on its name.
