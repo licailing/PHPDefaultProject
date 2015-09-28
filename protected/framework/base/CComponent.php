@@ -88,7 +88,7 @@
  */
 class CComponent
 {
-	private $_e;    #事件句柄容器：观察者模式   可以看作一个hash 表，hash 表的key 是事件的名称，hash 表的value 是事件处理函数链表。
+	private $_e;    #事件句柄（Event Handle）容器：观察者模式   可以看作一个hash 表，hash 表的key 是事件的名称，hash 表的value 是事件处理函数链表。
 	private $_m;    #行为
 
 	/**
@@ -150,7 +150,7 @@ class CComponent
 		$setter='set'.$name;
 		if(method_exists($this,$setter))
 			return $this->$setter($value);
-		elseif(strncasecmp($name,'on',2)===0 && method_exists($this,$name))
+		elseif(strncasecmp($name,'on',2)===0 && method_exists($this,$name))     #添加事件处理句柄
 		{
 			// duplicating getEventHandlers() here for performance
 			$name=strtolower($name);
