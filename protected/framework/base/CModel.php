@@ -149,7 +149,7 @@ abstract class CModel extends CComponent implements IteratorAggregate, ArrayAcce
 	 * @see beforeValidate
 	 * @see afterValidate
 	 */
-	public function validate($attributes=null, $clearErrors=true)
+	public function validate($attributes=null, $clearErrors=true)   #验证
 	{
 		if($clearErrors)
 			$this->clearErrors();

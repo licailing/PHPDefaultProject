@@ -38,12 +38,12 @@ class CBooleanValidator extends CValidator
 	 * When this is true, the attribute value and type must both match those of {@link trueValue} or {@link falseValue}.
 	 * Defaults to false, meaning only the value needs to be matched.
 	 */
-	public $strict=false;
+	public $strict=false;   #是否完全匹配
 	/**
 	 * @var boolean whether the attribute value can be null or empty. Defaults to true,
 	 * meaning that if the attribute is empty, it is considered valid.
 	 */
-	public $allowEmpty=true;
+	public $allowEmpty=true;    #允许为空
 
 	/**
 	 * Validates the attribute of the object.

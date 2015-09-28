@@ -53,12 +53,12 @@
  * @package system.validators
  * @since 1.0
  */
-abstract class CValidator extends CComponent
+abstract class CValidator extends CComponent        #验证基类(工厂模式)
 {
 	/**
 	 * @var array list of built-in validators (name=>class)
 	 */
-	public static $builtInValidators=array(
+	public static $builtInValidators=array(     #Yii内置验证类
 		'required'=>'CRequiredValidator',
 		'filter'=>'CFilterValidator',
 		'match'=>'CRegularExpressionValidator',
@@ -83,24 +83,24 @@ abstract class CValidator extends CComponent
 	/**
 	 * @var array list of attributes to be validated.
 	 */
-	public $attributes;
+	public $attributes;     #待验证属性数组
 	/**
 	 * @var string the user-defined error message. Different validators may define various
 	 * placeholders in the message that are to be replaced with actual values. All validators
 	 * recognize "{attribute}" placeholder, which will be replaced with the label of the attribute.
 	 */
-	public $message;
+	public $message;        #错误信息
 	/**
 	 * @var boolean whether this validation rule should be skipped when there is already a validation
 	 * error for the current attribute. Defaults to false.
 	 * @since 1.1.1
 	 */
-	public $skipOnError=false;
+	public $skipOnError=false;      #如果已有错误是否继续验证
 	/**
 	 * @var array list of scenarios that the validator should be applied.
 	 * Each array value refers to a scenario name with the same name as its array key.
 	 */
-	public $on;
+	public $on;     #数组
 	/**
 	 * @var array list of scenarios that the validator should not be applied to.
 	 * Each array value refers to a scenario name with the same name as its array key.
@@ -118,7 +118,7 @@ abstract class CValidator extends CComponent
 	 * Please refer to {@link CActiveForm::enableClientValidation} for more details about client-side validation.
 	 * @since 1.1.7
 	 */
-	public $enableClientValidation=true;
+	public $enableClientValidation=true;    #客户端验证
 
 	/**
 	 * Validates a single attribute.
@@ -260,7 +260,7 @@ abstract class CValidator extends CComponent
 	protected function addError($object,$attribute,$message,$params=array())
 	{
 		$params['{attribute}']=$object->getAttributeLabel($attribute);
-		$object->addError($attribute,strtr($message,$params));
+		$object->addError($attribute,strtr($message,$params));      #表单添加错误信息
 	}
 
 	/**
