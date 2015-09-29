@@ -244,7 +244,7 @@ interface IViewRenderer
  * @package system.base
  * @since 1.0
  */
-interface IUserIdentity
+interface IUserIdentity     #用户认证
 {
 	/**
 	 * Authenticates the user.
@@ -252,7 +252,7 @@ interface IUserIdentity
 	 * are usually provided in the constructor.
 	 * @return boolean whether authentication succeeds.
 	 */
-	public function authenticate();
+	public function authenticate();     #认证
 	/**
 	 * Returns a value indicating whether the identity is authenticated.
 	 * @return boolean whether the identity is valid.
@@ -286,7 +286,7 @@ interface IUserIdentity
  * @package system.base
  * @since 1.0
  */
-interface IWebUser
+interface IWebUser      #角色访问控制
 {
 	/**
 	 * Returns a value that uniquely represents the identity.

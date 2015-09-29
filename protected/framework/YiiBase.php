@@ -93,7 +93,7 @@ class YiiBase
 	 * If not, the directory will be defaulted to 'protected'.
 	 * @return CWebApplication
 	 */
-	public static function createWebApplication($config=null)
+	public static function createWebApplication($config=null)       #创建应用对象
 	{
 		return self::createApplication('CWebApplication',$config);
 	}
@@ -144,7 +144,7 @@ class YiiBase
 	 * application singleton will be removed.
 	 * @throws CException if multiple application instances are registered.
 	 */
-	public static function setApplication($app)
+	public static function setApplication($app)     #设置Yii::app()
 	{
 		if(self::$_app===null || $app===null)
 			self::$_app=$app;
@@ -380,7 +380,7 @@ class YiiBase
 	 * @param string $path the path corresponding to the alias. If this is null, the corresponding
 	 * path alias will be removed.
 	 */
-	public static function setPathOfAlias($alias,$path)
+	public static function setPathOfAlias($alias,$path)     #设置或删除（path为空）别名
 	{
 		if(empty($path))
 			unset(self::$_aliases[$alias]);
@@ -576,6 +576,7 @@ class YiiBase
 	 */
 	public static function t($category,$message,$params=array(),$source=null,$language=null)        #translates翻译信息
 	{
+            #Yii::t('yii','{class}::authenticate() must be implemented.',array('{class}'=>get_class($this))
 		if(self::$_app!==null)
 		{
 			if($source===null)

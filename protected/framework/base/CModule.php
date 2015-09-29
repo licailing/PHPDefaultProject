@@ -35,28 +35,28 @@
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @package system.base
  */
-abstract class CModule extends CComponent
+abstract class CModule extends CComponent       #应用和模块的基类
 {
 	/**
 	 * @var array the IDs of the application components that should be preloaded.
 	 */
-	public $preload=array();
+	public $preload=array();        #预加载组件
 	/**
 	 * @var array the behaviors that should be attached to the module.
 	 * The behaviors will be attached to the module when {@link init} is called.
 	 * Please refer to {@link CModel::behaviors} on how to specify the value of this property.
 	 */
-	public $behaviors=array();
+	public $behaviors=array();      #行为
 
 	private $_id;
-	private $_parentModule;
-	private $_basePath;
-	private $_modulePath;
+	private $_parentModule;         #父模块
+	private $_basePath;             #基本路径
+	private $_modulePath;           #模块路径
 	private $_params;
 	private $_modules=array();
 	private $_moduleConfig=array();
-	private $_components=array();
-	private $_componentConfig=array();
+	private $_components=array();   #组件
+	private $_componentConfig=array();      #组件配置
 
 
 	/**
@@ -68,7 +68,7 @@ abstract class CModule extends CComponent
 	 */
 	public function __construct($id,$parent,$config=null)
 	{
-		$this->_id=$id;
+		$this->_id=$id;     #basepath的别名
 		$this->_parentModule=$parent;
 
 		// set basePath at early as possible to avoid trouble
@@ -79,13 +79,13 @@ abstract class CModule extends CComponent
 			$this->setBasePath($config['basePath']);
 			unset($config['basePath']);
 		}
-		Yii::setPathOfAlias($id,$this->getBasePath());
+		Yii::setPathOfAlias($id,$this->getBasePath());      #设置basePath的别名
 
 		$this->preinit();
 
-		$this->configure($config);
-		$this->attachBehaviors($this->behaviors);
-		$this->preloadComponents();
+		$this->configure($config);      #设置配置:$this->$key = $value
+		$this->attachBehaviors($this->behaviors);           #绑定行为
+		$this->preloadComponents();     #预加载组件
 
 		$this->init();
 	}
@@ -372,7 +372,7 @@ abstract class CModule extends CComponent
 	 * @return IApplicationComponent the application component instance, null if the application component is disabled or does not exist.
 	 * @see hasComponent
 	 */
-	public function getComponent($id,$createIfNull=true)
+	public function getComponent($id,$createIfNull=true)        #有返回组件对象，没有创建返回
 	{
 		if(isset($this->_components[$id]))
 			return $this->_components[$id];
@@ -495,7 +495,7 @@ abstract class CModule extends CComponent
 	 * Defaults to true, meaning the previously registered component configuration of the same ID
 	 * will be merged with the new configuration. If false, the existing configuration will be replaced completely.
 	 */
-	public function setComponents($components,$merge=true)
+	public function setComponents($components,$merge=true)      #批量设置组件
 	{
 		foreach($components as $id=>$component)
 			$this->setComponent($id,$component,$merge);
@@ -510,14 +510,14 @@ abstract class CModule extends CComponent
 		if(is_array($config))
 		{
 			foreach($config as $key=>$value)
-				$this->$key=$value;
+				$this->$key=$value;         #调用CComponent  __set方法
 		}
 	}
 
 	/**
 	 * Loads static application components.
 	 */
-	protected function preloadComponents()
+	protected function preloadComponents()  #预加载组件
 	{
 		foreach($this->preload as $id)
 			$this->getComponent($id);

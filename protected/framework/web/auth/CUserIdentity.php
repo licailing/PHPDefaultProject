@@ -24,7 +24,7 @@
  * @package system.web.auth
  * @since 1.0
  */
-class CUserIdentity extends CBaseUserIdentity
+class CUserIdentity extends CBaseUserIdentity       #用户认证（基于用户名和密码）
 {
 	/**
 	 * @var string username

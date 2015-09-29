@@ -119,7 +119,7 @@ class CWebApplication extends CApplication
 	private $_viewPath;
 	private $_systemViewPath;
 	private $_layoutPath;
-	private $_controller;
+	private $_controller;       #控制器对象
 	private $_theme;
 
 
@@ -128,7 +128,7 @@ class CWebApplication extends CApplication
 	 * It first resolves the request into controller and action,
 	 * and then creates the controller to perform the action.
 	 */
-	public function processRequest()
+	public function processRequest()        #处理请求
 	{
 		if(is_array($this->catchAllRequest) && isset($this->catchAllRequest[0]))
 		{
@@ -137,7 +137,7 @@ class CWebApplication extends CApplication
 				$_GET[$name]=$value;
 		}
 		else
-			$route=$this->getUrlManager()->parseUrl($this->getRequest());
+			$route=$this->getUrlManager()->parseUrl($this->getRequest());       #实现延迟加载$this->getUrlManager()
 		$this->runController($route);
 	}
 
@@ -157,7 +157,7 @@ class CWebApplication extends CApplication
 			'assetManager'=>array(
 				'class'=>'CAssetManager',
 			),
-			'user'=>array(
+			'user'=>array(          #user组件
 				'class'=>'CWebUser',
 			),
 			'themeManager'=>array(
@@ -204,7 +204,7 @@ class CWebApplication extends CApplication
 	/**
 	 * @return CWebUser the user session information
 	 */
-	public function getUser()
+	public function getUser()       #获取user组件:Yii::app()->user
 	{
 		return $this->getComponent('user');
 	}
@@ -271,7 +271,7 @@ class CWebApplication extends CApplication
 	 * @param string $route the route of the current request. See {@link createController} for more details.
 	 * @throws CHttpException if the controller could not be created.
 	 */
-	public function runController($route)
+	public function runController($route)       #运行控制器
 	{
 		if(($ca=$this->createController($route))!==null)
 		{
@@ -542,6 +542,6 @@ class CWebApplication extends CApplication
 	{
 		parent::init();
 		// preload 'request' so that it has chance to respond to onBeginRequest event.
-		$this->getRequest();
+		$this->getRequest();        #加载request组件
 	}
 }

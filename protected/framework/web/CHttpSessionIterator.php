@@ -17,7 +17,7 @@
  * @package system.web
  * @since 1.0
  */
-class CHttpSessionIterator implements Iterator
+class CHttpSessionIterator implements Iterator      #CHttpSession对象的迭代器
 {
 	/**
 	 * @var array list of keys in the map

@@ -55,7 +55,7 @@
  * @package system.web.auth
  * @since 1.0
  */
-class CWebUser extends CApplicationComponent implements IWebUser
+class CWebUser extends CApplicationComponent implements IWebUser        
 {
 	const FLASH_KEY_PREFIX='Yii.CWebUser.flash.';
 	const FLASH_COUNTERS='Yii.CWebUser.flashcounters';
@@ -138,10 +138,10 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	 * @param string $name property name
 	 * @return mixed property value
 	 */
-	public function __get($name)
+	public function __get($name)            #重写了CComponent 魔术方法
 	{
-		if($this->hasState($name))
-			return $this->getState($name);
+		if($this->hasState($name))      #isset($_SESSION[$key]);
+			return $this->getState($name);  #isset($_SESSION[$key]) ? $_SESSION[$key] : $defaultValue;
 		else
 			return parent::__get($name);
 	}
@@ -155,7 +155,7 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	public function __set($name,$value)
 	{
 		if($this->hasState($name))
-			$this->setState($name,$value);
+			$this->setState($name,$value);      #$_SESSION[$key]=$value;
 		else
 			parent::__set($name,$value);
 	}
@@ -193,10 +193,10 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	 * This method overrides the parent implementation by starting session,
 	 * performing cookie-based authentication if enabled, and updating the flash variables.
 	 */
-	public function init()
+	public function init()  
 	{
 		parent::init();
-		Yii::app()->getSession()->open();
+		Yii::app()->getSession()->open();       #开启session
 		if($this->getIsGuest() && $this->allowAutoLogin)
 			$this->restoreFromCookie();
 		elseif($this->autoRenewCookie && $this->allowAutoLogin)
@@ -226,16 +226,16 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	 */
 	public function login($identity,$duration=0)
 	{
-		$id=$identity->getId();
-		$states=$identity->getPersistentStates();
-		if($this->beforeLogin($id,$states,false))
+		$id=$identity->getId();     #CUserIdentity：username
+		$states=$identity->getPersistentStates();   #CBaseUserIdentity:return $this->_state
+		if($this->beforeLogin($id,$states,false))       #return true
 		{
-			$this->changeIdentity($id,$identity->getName(),$states);
+			$this->changeIdentity($id,$identity->getName(),$states);        #将identity信息存入session
 
 			if($duration>0)
 			{
 				if($this->allowAutoLogin)
-					$this->saveToCookie($duration);
+					$this->saveToCookie($duration);     #将CUserIdentity中state信息保存入cookie
 				else
 					throw new CException(Yii::t('yii','{class}.allowAutoLogin must be set true in order to use cookie-based authentication.',
 						array('{class}'=>get_class($this))));
@@ -539,7 +539,7 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	/**
 	 * @return string a prefix for the name of the session variables storing user session data.
 	 */
-	public function getStateKeyPrefix()
+	public function getStateKeyPrefix()     #状态前缀
 	{
 		if($this->_keyPrefix!==null)
 			return $this->_keyPrefix;
@@ -712,10 +712,10 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	 */
 	protected function changeIdentity($id,$name,$states)
 	{
-		Yii::app()->getSession()->regenerateID(true);
+		Yii::app()->getSession()->regenerateID(true);       #重新生成一个session_id
 		$this->setId($id);
 		$this->setName($name);
-		$this->loadIdentityStates($states);
+		$this->loadIdentityStates($states);     #将CUserIdentity中state存入session
 	}
 
 	/**
@@ -734,7 +734,7 @@ class CWebUser extends CApplicationComponent implements IWebUser
 	 * Loads identity states from an array and saves them to persistent storage.
 	 * @param array $states the identity states
 	 */
-	protected function loadIdentityStates($states)
+	protected function loadIdentityStates($states)      #将CUserIdentity中state存入session
 	{
 		$names=array();
 		if(is_array($states))

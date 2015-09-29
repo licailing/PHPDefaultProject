@@ -1,6 +1,6 @@
 <?php
 
-class WebUser extends CWebUser
+class WebUser extends CWebUser      #Yii::app()->user
 {
 	
 	private $model;

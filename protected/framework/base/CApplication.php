@@ -82,7 +82,7 @@
  * @package system.base
  * @since 1.0
  */
-abstract class CApplication extends CModule
+abstract class CApplication extends CModule     #应用基类
 {
 	/**
 	 * @var string the application name. Defaults to 'My Application'.
@@ -126,7 +126,7 @@ abstract class CApplication extends CModule
 	 */
 	public function __construct($config=null)
 	{
-		Yii::setApplication($this);
+		Yii::setApplication($this);     #设置Yii::app()对象
 
 		// set basePath at early as possible to avoid trouble
 		if(is_string($config))
@@ -142,23 +142,23 @@ abstract class CApplication extends CModule
 		Yii::setPathOfAlias('webroot',dirname($_SERVER['SCRIPT_FILENAME']));
 		if(isset($config['extensionPath']))
 		{
-			$this->setExtensionPath($config['extensionPath']);
+			$this->setExtensionPath($config['extensionPath']);      #设置扩展路径别名
 			unset($config['extensionPath']);
 		}
 		else
 			Yii::setPathOfAlias('ext',$this->getBasePath().DIRECTORY_SEPARATOR.'extensions');
 		if(isset($config['aliases']))
 		{
-			$this->setAliases($config['aliases']);
+			$this->setAliases($config['aliases']);      #批量设置或重设别名
 			unset($config['aliases']);
 		}
 
 		$this->preinit();
 
-		$this->initSystemHandlers();
-		$this->registerCoreComponents();
+		$this->initSystemHandlers();        #注册errorHandle和exceptionHandle
+		$this->registerCoreComponents();    #注册核心组件的配置信息
 
-		$this->configure($config);
+		$this->configure($config);          #设置配置文件  $this->$key = $value  配置文件：'preload' => array('log', 'session')
 		$this->attachBehaviors($this->behaviors);
 		$this->preloadComponents();
 
@@ -172,14 +172,14 @@ abstract class CApplication extends CModule
 	 * method to do more application-specific tasks.
 	 * Remember to call the parent implementation so that static application components are loaded.
 	 */
-	public function run()
+	public function run()       #开始运行
 	{
 		if($this->hasEventHandler('onBeginRequest'))
-			$this->onBeginRequest(new CEvent($this));
-		register_shutdown_function(array($this,'end'),0,false);
-		$this->processRequest();
+			$this->onBeginRequest(new CEvent($this));    #触发onBeginRequest事件
+		register_shutdown_function(array($this,'end'),0,false);     #定义PHP程序执行完成后执行的函数
+		$this->processRequest();        #处理请求
 		if($this->hasEventHandler('onEndRequest'))
-			$this->onEndRequest(new CEvent($this));
+			$this->onEndRequest(new CEvent($this));     #触发onEndRequest事件
 	}
 
 	/**
@@ -517,7 +517,7 @@ abstract class CApplication extends CModule
 	 * Returns the URL manager component.
 	 * @return CUrlManager the URL manager component
 	 */
-	public function getUrlManager()
+	public function getUrlManager()     #获取组件：实现延迟加载
 	{
 		return $this->getComponent('urlManager');
 	}
@@ -939,7 +939,7 @@ abstract class CApplication extends CModule
 	/**
 	 * Initializes the class autoloader and error handlers.
 	 */
-	protected function initSystemHandlers()
+	protected function initSystemHandlers()     #设置事件处理句柄
 	{
 		if(YII_ENABLE_EXCEPTION_HANDLER)
 			set_exception_handler(array($this,'handleException'));
@@ -951,7 +951,7 @@ abstract class CApplication extends CModule
 	 * Registers the core application components.
 	 * @see setComponents
 	 */
-	protected function registerCoreComponents()
+	protected function registerCoreComponents()     #添加组件配置
 	{
 		$components=array(
 			'coreMessages'=>array(

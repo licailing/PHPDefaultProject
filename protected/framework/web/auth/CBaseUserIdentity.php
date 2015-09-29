@@ -30,24 +30,24 @@
  * @package system.web.auth
  * @since 1.0
  */
-abstract class CBaseUserIdentity extends CComponent implements IUserIdentity
+abstract class CBaseUserIdentity extends CComponent implements IUserIdentity    #认证基类
 {
-	const ERROR_NONE=0;
-	const ERROR_USERNAME_INVALID=1;
-	const ERROR_PASSWORD_INVALID=2;
-	const ERROR_UNKNOWN_IDENTITY=100;
+	const ERROR_NONE=0;                 #没有错误
+	const ERROR_USERNAME_INVALID=1;     #用户名无效
+	const ERROR_PASSWORD_INVALID=2;     #密码无效
+	const ERROR_UNKNOWN_IDENTITY=100;   #无效身份
 
 	/**
 	 * @var integer the authentication error code. If there is an error, the error code will be non-zero.
 	 * Defaults to 100, meaning unknown identity. Calling {@link authenticate} will change this value.
 	 */
-	public $errorCode=self::ERROR_UNKNOWN_IDENTITY;
+	public $errorCode=self::ERROR_UNKNOWN_IDENTITY;     #错误号
 	/**
 	 * @var string the authentication error message. Defaults to empty.
 	 */
-	public $errorMessage='';
+	public $errorMessage='';       #错误信息
 
-	private $_state=array();
+	private $_state=array();       #保存状态（数组）相当于session    $this->setState('name', $this->model->name);
 
 	/**
 	 * Returns a value that uniquely represents the identity.
@@ -94,7 +94,7 @@ abstract class CBaseUserIdentity extends CComponent implements IUserIdentity
 	 * This method is required by {@link IUserIdentity}.
 	 * @return boolean whether the authentication is successful.
 	 */
-	public function getIsAuthenticated()
+	public function getIsAuthenticated()    #获取用户是否通过验证
 	{
 		return $this->errorCode==self::ERROR_NONE;
 	}

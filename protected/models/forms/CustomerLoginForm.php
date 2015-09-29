@@ -36,7 +36,7 @@ class CustomerLoginForm extends CFormModel
 			{
 				case CustomerIdentity::ERROR_NONE:
 					$duration = $this->rememberMe ? 3600*24*30 : 0; // 30 days
-					UserUtil::getDefaultWebUser()->login($identity, $duration);
+					UserUtil::getDefaultWebUser()->login($identity, $duration);     #登录，关键一步
 					break;
 				case CustomerIdentity::ERROR_USERNAME_INVALID:
 					$this->addError('username', null);
