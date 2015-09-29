@@ -29,13 +29,13 @@
  * @package system.logging
  * @since 1.0
  */
-class CLogger extends CComponent
+class CLogger extends CComponent        #日志
 {
-	const LEVEL_TRACE='trace';
-	const LEVEL_WARNING='warning';
-	const LEVEL_ERROR='error';
-	const LEVEL_INFO='info';
-	const LEVEL_PROFILE='profile';
+	const LEVEL_TRACE='trace';      #跟踪
+	const LEVEL_WARNING='warning';  #警告
+	const LEVEL_ERROR='error';      #错误
+	const LEVEL_INFO='info';        #信息
+	const LEVEL_PROFILE='profile';  #属性
 
 	/**
 	 * @var integer how many messages should be logged before they are flushed to destinations.
@@ -43,7 +43,7 @@ class CLogger extends CComponent
 	 * automatically invoked once. If this is 0, it means messages will never be flushed automatically.
 	 * @since 1.1.0
 	 */
-	public $autoFlush=10000;
+	public $autoFlush=10000;       #缓存信息条数
 	/**
 	 * @var boolean this property will be passed as the parameter to {@link flush()} when it is
 	 * called in {@link log()} due to the limit of {@link autoFlush} being reached.
@@ -56,7 +56,7 @@ class CLogger extends CComponent
 	/**
 	 * @var array log messages
 	 */
-	private $_logs=array();
+	private $_logs=array();     #记录的日志
 	/**
 	 * @var integer number of log messages
 	 */
@@ -81,7 +81,7 @@ class CLogger extends CComponent
 	* @var boolean if we are processing the log or still accepting new log messages
 	* @since 1.1.9
 	*/
-	private $_processing=false;
+	private $_processing=false;     #是否处理日志消息
 
 	/**
 	 * Logs a message.
@@ -91,7 +91,7 @@ class CLogger extends CComponent
 	 * @param string $category category of the message (e.g. 'system.web'). It is case-insensitive.
 	 * @see getLogs
 	 */
-	public function log($message,$level='info',$category='application')
+	public function log($message,$level='info',$category='application')     #记录一条日志
 	{
 		$this->_logs[]=array($message,$level,$category,microtime(true));
 		$this->_logCount++;
@@ -349,6 +349,6 @@ class CLogger extends CComponent
 	 */
 	public function onFlush($event)
 	{
-		$this->raiseEvent('onFlush', $event);
+		$this->raiseEvent('onFlush', $event);       #触发onFlush事件
 	}
 }

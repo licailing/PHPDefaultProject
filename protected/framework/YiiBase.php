@@ -67,11 +67,11 @@ class YiiBase
 	 */
 	public static $enableIncludePath=true;
 
-	private static $_aliases=array('system'=>YII_PATH,'zii'=>YII_ZII_PATH); // alias => path
+	private static $_aliases=array('system'=>YII_PATH,'zii'=>YII_ZII_PATH); // alias => path    别名
 	private static $_imports=array();					// alias => class name or directory
 	private static $_includePaths;						// list of include paths
-	private static $_app;
-	private static $_logger;
+	private static $_app;           #保存应用对象
+	private static $_logger;        #保存日志对象
 
 
 
@@ -177,7 +177,7 @@ class YiiBase
 	 * @return mixed the created object
 	 * @throws CException if the configuration does not have a 'class' element.
 	 */
-	public static function createComponent($config)
+	public static function createComponent($config)     #创建对象
 	{
 		if(is_string($config))
 		{
@@ -260,7 +260,7 @@ class YiiBase
 	 * @return string the class name or the directory that this alias refers to
 	 * @throws CException if the alias is invalid
 	 */
-	public static function import($alias,$forceInclude=false)
+	public static function import($alias,$forceInclude=false)       #导入类文件或目录
 	{
 		if(isset(self::$_imports[$alias]))  // previously imported
 			return self::$_imports[$alias];
@@ -355,7 +355,7 @@ class YiiBase
 	 * @param string $alias alias (e.g. system.web.CController)
 	 * @return mixed file path corresponding to the alias, false if the alias is invalid.
 	 */
-	public static function getPathOfAlias($alias)
+	public static function getPathOfAlias($alias)       #根据别名获取目录
 	{
 		if(isset(self::$_aliases[$alias]))
 			return self::$_aliases[$alias];
@@ -394,7 +394,7 @@ class YiiBase
 	 * @param string $className class name
 	 * @return boolean whether the class has been loaded successfully
 	 */
-	public static function autoload($className)
+	public static function autoload($className)     #这个类会在你实例化对象之前自动加载制定的文件(不在同一个目录)
 	{
 		// use include so that the error PHP file may appear
 		if(isset(self::$classMap[$className]))
@@ -446,7 +446,7 @@ class YiiBase
 	 * @param string $category category of the message
 	 * @see log
 	 */
-	public static function trace($msg,$category='application')
+	public static function trace($msg,$category='application')      #记录跟踪日志（debug开启情况下）
 	{
 		if(YII_DEBUG)
 			self::log($msg,CLogger::LEVEL_TRACE,$category);
@@ -461,10 +461,10 @@ class YiiBase
 	 * @param string $level level of the message (e.g. 'trace', 'warning', 'error'). It is case-insensitive.
 	 * @param string $category category of the message (e.g. 'system.web'). It is case-insensitive.
 	 */
-	public static function log($msg,$level=CLogger::LEVEL_INFO,$category='application')
+	public static function log($msg,$level=CLogger::LEVEL_INFO,$category='application')     #记录日志(trace,waring,error,info,profile)
 	{
 		if(self::$_logger===null)
-			self::$_logger=new CLogger;
+			self::$_logger=new CLogger;     #创建日志对象
 		if(YII_DEBUG && YII_TRACE_LEVEL>0 && $level!==CLogger::LEVEL_PROFILE)
 		{
 			$traces=debug_backtrace();
@@ -503,7 +503,7 @@ class YiiBase
 	 * @param string $category the category of this log message
 	 * @see endProfile
 	 */
-	public static function beginProfile($token,$category='application')
+	public static function beginProfile($token,$category='application')     #记录profile日志
 	{
 		self::log('begin:'.$token,CLogger::LEVEL_PROFILE,$category);
 	}
@@ -523,7 +523,7 @@ class YiiBase
 	/**
 	 * @return CLogger message logger
 	 */
-	public static function getLogger()
+	public static function getLogger()      #获取日志对象（单例）
 	{
 		if(self::$_logger!==null)
 			return self::$_logger;
@@ -574,7 +574,7 @@ class YiiBase
 	 * @return string the translated message
 	 * @see CMessageSource
 	 */
-	public static function t($category,$message,$params=array(),$source=null,$language=null)
+	public static function t($category,$message,$params=array(),$source=null,$language=null)        #translates翻译信息
 	{
 		if(self::$_app!==null)
 		{
@@ -622,7 +622,7 @@ class YiiBase
 	 * when set to true. After this the Yii autoloader can not rely on loading classes via simple include anymore
 	 * and you have to {@link import} all classes explicitly.
 	 */
-	public static function registerAutoloader($callback, $append=false)
+	public static function registerAutoloader($callback, $append=false)     #注册初始化处理方法
 	{
 		if($append)
 		{
@@ -642,7 +642,7 @@ class YiiBase
 	 * NOTE, DO NOT MODIFY THIS ARRAY MANUALLY. IF YOU CHANGE OR ADD SOME CORE CLASSES,
 	 * PLEASE RUN 'build autoload' COMMAND TO UPDATE THIS ARRAY.
 	 */
-	private static $_coreClasses=array(
+	private static $_coreClasses=array(     #核心类文件地址
 		'CApplication' => '/base/CApplication.php',
 		'CApplicationComponent' => '/base/CApplicationComponent.php',
 		'CBehavior' => '/base/CBehavior.php',
@@ -866,5 +866,5 @@ class YiiBase
 	);
 }
 
-spl_autoload_register(array('YiiBase','autoload'));
+spl_autoload_register(array('YiiBase','autoload'));     #注册初始化方法
 require(YII_PATH.'/base/interfaces.php');

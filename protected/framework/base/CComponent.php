@@ -323,10 +323,10 @@ class CComponent
 	 * behavior with the same name, if it exists).
 	 * @return IBehavior the behavior object
 	 */
-	public function attachBehavior($name,$behavior)
+	public function attachBehavior($name,$behavior)     #绑定行为
 	{
 		if(!($behavior instanceof IBehavior))
-			$behavior=Yii::createComponent($behavior);
+			$behavior=Yii::createComponent($behavior);  #创建对象
 		$behavior->setEnabled(true);
 		$behavior->attach($this);
 		return $this->_m[$name]=$behavior;
@@ -338,7 +338,7 @@ class CComponent
 	 * @param string $name the behavior's name. It uniquely identifies the behavior.
 	 * @return IBehavior the detached behavior. Null if the behavior does not exist.
 	 */
-	public function detachBehavior($name)
+	public function detachBehavior($name)       #解绑行为
 	{
 		if(isset($this->_m[$name]))
 		{
@@ -540,7 +540,7 @@ class CComponent
 	 * @param CEvent $event the event parameter
 	 * @throws CException if the event is undefined or an event handler is invalid.
 	 */
-	public function raiseEvent($name,$event)
+	public function raiseEvent($name,$event)        #事件句柄处理事件
 	{
 		$name=strtolower($name);
 		if(isset($this->_e[$name]))
