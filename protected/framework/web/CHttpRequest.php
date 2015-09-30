@@ -194,7 +194,7 @@ class CHttpRequest extends CApplicationComponent
 	 * @see getParam
 	 * @see getQuery
 	 */
-	public function getPost($name,$defaultValue=null)
+	public function getPost($name,$defaultValue=null)       #获取post中$name
 	{
 		return isset($_POST[$name]) ? $_POST[$name] : $defaultValue;
 	}

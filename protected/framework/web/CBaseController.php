@@ -10,7 +10,7 @@
 
 
 /**
- * CBaseController is the base class for {@link CController} and {@link CWidget}.
+ * CBaseController is the base class for {@link CController} and {@link CWidget}. 
  *
  * It provides the common functionalities shared by controllers who need to render views.
  *
@@ -64,7 +64,7 @@
  * @package system.web
  * @since 1.0
  */
-abstract class CBaseController extends CComponent
+abstract class CBaseController extends CComponent       #CController和CWidget基类
 {
 	private $_widgetStack=array();
 
