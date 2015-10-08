@@ -18,7 +18,7 @@
  * @package system.web.actions
  * @since 1.0
  */
-class CInlineAction extends CAction
+class CInlineAction extends CAction     #内部动作
 {
 	/**
 	 * Runs the action.

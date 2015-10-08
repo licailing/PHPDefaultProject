@@ -55,12 +55,12 @@ class CFilterChain extends CList
 	 */
 	public static function create($controller,$action,$filters)
 	{
-		$chain=new CFilterChain($controller,$action);
+		$chain=new CFilterChain($controller,$action);   #创建CFilterChain对象
 
 		$actionID=$action->getId();
 		foreach($filters as $filter)
 		{
-			if(is_string($filter))  // filterName [+|- action1 action2]
+			if(is_string($filter))  // filterName [+|- action1 action2] 内部
 			{
 				if(($pos=strpos($filter,'+'))!==false || ($pos=strpos($filter,'-'))!==false)
 				{
@@ -69,9 +69,9 @@ class CFilterChain extends CList
 						$filter=CInlineFilter::create($controller,trim(substr($filter,0,$pos)));
 				}
 				else
-					$filter=CInlineFilter::create($controller,$filter);
+					$filter=CInlineFilter::create($controller,$filter);     #创建内部过滤:$filter=new CInlineFilter; $filter->name=$filterName;
 			}
-			elseif(is_array($filter))  // array('path.to.class [+|- action1, action2]','param1'=>'value1',...)
+			elseif(is_array($filter))  // array('path.to.class [+|- action1, action2]','param1'=>'value1',...) 外部
 			{
 				if(!isset($filter[0]))
 					throw new CException(Yii::t('yii','The first element in a filter configuration must be the filter class.'));

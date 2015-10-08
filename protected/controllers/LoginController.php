@@ -22,8 +22,8 @@ class LoginController extends SiteController {
                 Yii::trace('Erro ao efetuar login com o usuário: ' . $form->username . '.');
             }
         }
-
-        $this->render($this->getAction()->getId(), array(
+        
+        $this->render($this->getAction()->getId(), array(       //index
             'form' => $form,
         ));
     }

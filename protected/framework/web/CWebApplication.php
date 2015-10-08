@@ -309,23 +309,25 @@ class CWebApplication extends CApplication
 	 */
 	public function createController($route,$owner=null)
 	{
+            //$this->println($route);exit;       #string(10) "home/index"  或  string(16) "register/captcha"    或  string(26) "register/captcha/refresh/1"
 		if($owner===null)
 			$owner=$this;
 		if(($route=trim($route,'/'))==='')
-			$route=$owner->defaultController;
-		$caseSensitive=$this->getUrlManager()->caseSensitive;
+			$route=$owner->defaultController;   #site
+		$caseSensitive=$this->getUrlManager()->caseSensitive;   #true
 
-		$route.='/';
+		$route.='/';    #home/index/
 		while(($pos=strpos($route,'/'))!==false)
 		{
-			$id=substr($route,0,$pos);
+			$id=substr($route,0,$pos);  #home
 			if(!preg_match('/^\w+$/',$id))
 				return null;
 			if(!$caseSensitive)
 				$id=strtolower($id);
-			$route=(string)substr($route,$pos+1);
+			$route=(string)substr($route,$pos+1);   #index/
 			if(!isset($basePath))  // first segment
 			{
+                            #$this->println($owner->controllerMap,$owner->getModule($id));exit;     //array() null
 				if(isset($owner->controllerMap[$id]))
 				{
 					return array(
@@ -336,8 +338,8 @@ class CWebApplication extends CApplication
 
 				if(($module=$owner->getModule($id))!==null)
 					return $this->createController($route,$module);
-
-				$basePath=$owner->getControllerPath();
+                                //$this->println($this->getBasePath());exit;      #D:\AppServ\www\PHPDefaultProject\protected
+				$basePath=$owner->getControllerPath();  
 				$controllerID='';
 			}
 			else
@@ -352,9 +354,9 @@ class CWebApplication extends CApplication
 			{
 				if(!class_exists($className,false))
 					require($classFile);
-				if(class_exists($className,false) && is_subclass_of($className,'CController'))
+				if(class_exists($className,false) && is_subclass_of($className,'CController'))      #is_subclass_of $className 是 CController的子类
 				{
-					$id[0]=strtolower($id[0]);
+					$id[0]=strtolower($id[0]);  #h:字符串的第一个字母
 					return array(
 						new $className($controllerID.$id,$owner===$this?null:$owner),
 						$this->parseActionParams($route),

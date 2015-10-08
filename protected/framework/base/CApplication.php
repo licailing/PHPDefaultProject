@@ -160,7 +160,7 @@ abstract class CApplication extends CModule     #应用基类
 
 		$this->configure($config);          #设置配置文件  $this->$key = $value  配置文件：'preload' => array('log', 'session')
 		$this->attachBehaviors($this->behaviors);
-		$this->preloadComponents();
+		$this->preloadComponents();     #预加载组件
 
 		$this->init();
 	}
@@ -174,6 +174,7 @@ abstract class CApplication extends CModule     #应用基类
 	 */
 	public function run()       #开始运行
 	{
+            //$this->println($this->getEventHandlers('onBeginRequest'));
 		if($this->hasEventHandler('onBeginRequest'))
 			$this->onBeginRequest(new CEvent($this));    #触发onBeginRequest事件
 		register_shutdown_function(array($this,'end'),0,false);     #定义PHP程序执行完成后执行的函数

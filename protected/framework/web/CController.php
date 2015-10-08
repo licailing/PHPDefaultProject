@@ -260,10 +260,10 @@ class CController extends CBaseController
 		{
 			if(($parent=$this->getModule())===null)
 				$parent=Yii::app();
-			if($parent->beforeControllerAction($this,$action))
+			if($parent->beforeControllerAction($this,$action))      #true
 			{
 				$this->runActionWithFilters($action,$this->filters());
-				$parent->afterControllerAction($this,$action);
+				$parent->afterControllerAction($this,$action);  #
 			}
 		}
 		else
@@ -282,12 +282,14 @@ class CController extends CBaseController
 	 */
 	public function runActionWithFilters($action,$filters)
 	{
+            //$this->println($action,$filters);exit;
 		if(empty($filters))
 			$this->runAction($action);
 		else
 		{
 			$priorAction=$this->_action;
 			$this->_action=$action;
+                        $this->println(CFilterChain::create($this,$action,$filters));exit;
 			CFilterChain::create($this,$action,$filters)->run();
 			$this->_action=$priorAction;
 		}
@@ -409,12 +411,12 @@ class CController extends CBaseController
 	public function createAction($actionID)
 	{
 		if($actionID==='')
-			$actionID=$this->defaultAction;
+			$actionID=$this->defaultAction; #index
 		if(method_exists($this,'action'.$actionID) && strcasecmp($actionID,'s')) // we have actions method
-			return new CInlineAction($this,$actionID);
+			return new CInlineAction($this,$actionID);  #内部
 		else
 		{
-			$action=$this->createActionFromMap($this->actions(),$actionID,$actionID);
+			$action=$this->createActionFromMap($this->actions(),$actionID,$actionID);   #外部：如：captcha  验证码;
 			if($action!==null && !method_exists($action,'run'))
 				throw new CException(Yii::t('yii', 'Action class {class} must implement the "run" method.', array('{class}'=>get_class($action))));
 			return $action;
@@ -434,10 +436,11 @@ class CController extends CBaseController
 	 */
 	protected function createActionFromMap($actionMap,$actionID,$requestActionID,$config=array())
 	{
+            //$this->println(func_get_args());exit;
 		if(($pos=strpos($actionID,'.'))===false && isset($actionMap[$actionID]))
 		{
 			$baseConfig=is_array($actionMap[$actionID]) ? $actionMap[$actionID] : array('class'=>$actionMap[$actionID]);
-			return Yii::createComponent(empty($config)?$baseConfig:array_merge($baseConfig,$config),$this,$requestActionID);
+			return Yii::createComponent(empty($config)?$baseConfig:array_merge($baseConfig,$config),$this,$requestActionID);    #$object=new $type($args[1],$args[2]);
 		}
 		elseif($pos===false)
 			return null;

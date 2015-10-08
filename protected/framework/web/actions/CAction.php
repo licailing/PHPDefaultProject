@@ -28,7 +28,7 @@
  * @package system.web.actions
  * @since 1.0
  */
-abstract class CAction extends CComponent implements IAction
+abstract class CAction extends CComponent implements IAction    #动作
 {
 	private $_id;
 	private $_controller;

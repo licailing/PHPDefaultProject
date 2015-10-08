@@ -5,7 +5,7 @@ class SiteController extends CController
 
 	protected $requiredAuth = false;
 
-	public function actions()
+	public function actions()   #外部动作
 	{
 		return array(
 			'captcha'=>array(

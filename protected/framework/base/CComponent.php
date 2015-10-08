@@ -617,6 +617,17 @@ class CComponent
 			return call_user_func_array($_expression_, $_data_);
 		}
 	}
+        
+        public function println(){
+            $args = func_get_args();
+            if(php_sapi_name() == 'cli'){
+                call_user_func_array('var_dump', $args);
+            }else{
+                echo "<pre>";
+                call_user_func_array('var_dump',$args);
+                echo "</pre>";
+            }
+        }
 }
 
 
