@@ -10,7 +10,7 @@ return array(
 			'connectionString'   => 'mysql:host=127.0.0.1;dbname=myproject', //;unix_socket=/tmp/mysql.sock;
 			'emulatePrepare'     => true,
 			'username'           => 'root',
-			'password'           => 'root',
+			'password'           => '12345678',
 			'charset'            => 'utf8',
 			'enableProfiling'    => YII_DEBUG,
 			'enableParamLogging' => YII_DEBUG

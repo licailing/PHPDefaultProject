@@ -222,6 +222,7 @@ class CUrlManager extends CApplicationComponent
 				return;
 			}
 		}
+                #创建url规则组件
 		foreach($this->rules as $pattern=>$route)
 			$this->_rules[]=$this->createUrlRule($route,$pattern);
 		if(isset($cache))

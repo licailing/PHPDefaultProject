@@ -60,15 +60,15 @@ class CLogger extends CComponent        #日志
 	/**
 	 * @var integer number of log messages
 	 */
-	private $_logCount=0;
+	private $_logCount=0;#记录的条数
 	/**
 	 * @var array log levels for filtering (used when filtering)
 	 */
-	private $_levels;
+	private $_levels;#级别
 	/**
 	 * @var array log categories for filtering (used when filtering)
 	 */
-	private $_categories;
+	private $_categories;#类别
 	/**
 	 * @var array log categories for excluding from filtering (used when filtering)
 	 */
@@ -81,7 +81,7 @@ class CLogger extends CComponent        #日志
 	* @var boolean if we are processing the log or still accepting new log messages
 	* @since 1.1.9
 	*/
-	private $_processing=false;     #是否处理日志消息
+	private $_processing=false;     #是否处理（清空）日志消息还是继续接收新日志
 
 	/**
 	 * Logs a message.

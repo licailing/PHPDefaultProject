@@ -289,7 +289,7 @@ class CController extends CBaseController
 		{
 			$priorAction=$this->_action;
 			$this->_action=$action;
-                        $this->println(CFilterChain::create($this,$action,$filters));exit;
+                        //$this->println(CFilterChain::create($this,$action,$filters));exit;
 			CFilterChain::create($this,$action,$filters)->run();
 			$this->_action=$priorAction;
 		}

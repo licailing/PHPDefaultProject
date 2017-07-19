@@ -49,9 +49,9 @@
  * @package system.logging
  * @since 1.0
  */
-class CLogRouter extends CApplicationComponent
+class CLogRouter extends CApplicationComponent#日志路由组件
 {
-	private $_routes=array();
+	private $_routes=array();#日志记录对象列表
 
 	/**
 	 * Initializes this application component.
@@ -64,10 +64,10 @@ class CLogRouter extends CApplicationComponent
 		{
 			$route=Yii::createComponent($route);
 			$route->init();
-			$this->_routes[$name]=$route;
+			$this->_routes[$name]=$route;#日志记录对象
 		}
-		Yii::getLogger()->attachEventHandler('onFlush',array($this,'collectLogs'));
-		Yii::app()->attachEventHandler('onEndRequest',array($this,'processLogs'));
+		Yii::getLogger()->attachEventHandler('onFlush',array($this,'collectLogs'));#注册onFlush处理事件
+		Yii::app()->attachEventHandler('onEndRequest',array($this,'processLogs'));#注册onEndRequest处理事件
 	}
 
 	/**
@@ -101,6 +101,7 @@ class CLogRouter extends CApplicationComponent
 	{
 		$logger=Yii::getLogger();
 		$dumpLogs=isset($event->params['dumpLogs']) && $event->params['dumpLogs'];
+                #观察者模式
 		foreach($this->_routes as $route)
 		{
 			if($route->enabled)

@@ -37,11 +37,11 @@ class CMap extends CComponent implements IteratorAggregate,ArrayAccess,Countable
 	/**
 	 * @var array internal data storage
 	 */
-	private $_d=array();
+	private $_d=array();#数据存储
 	/**
 	 * @var boolean whether this list is read-only
 	 */
-	private $_r=false;
+	private $_r=false;#是否只读
 
 	/**
 	 * Constructor.
@@ -205,8 +205,10 @@ class CMap extends CComponent implements IteratorAggregate,ArrayAccess,Countable
 	 */
 	public function copyFrom($data)
 	{
+                #数组或继承自Traversable
 		if(is_array($data) || $data instanceof Traversable)
 		{
+                        #清理原数组
 			if($this->getCount()>0)
 				$this->clear();
 			if($data instanceof CMap)
@@ -280,10 +282,10 @@ class CMap extends CComponent implements IteratorAggregate,ArrayAccess,Countable
 	public static function mergeArray($a,$b)
 	{
 		$args=func_get_args();
-		$res=array_shift($args);
+		$res=array_shift($args);#第一个元素：array_shift删掉第一个元素并返回第一个元素
 		while(!empty($args))
 		{
-			$next=array_shift($args);
+			$next=array_shift($args);#第二个元素
 			foreach($next as $k => $v)
 			{
 				if(is_integer($k))
