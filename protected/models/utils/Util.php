@@ -210,7 +210,7 @@ class Util
 
 	public static function generateToken()
 	{
-		return uniqid(null, true);
+		return uniqid(null, true);#生成唯一的id:23位
 	}
 
 	public static function getDateTimeFromLocal()

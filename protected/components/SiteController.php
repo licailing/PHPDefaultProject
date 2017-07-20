@@ -23,12 +23,13 @@ class SiteController extends CController
 
 	public function filterCheckIfRequireAuth($filterChain)
 	{
-		if (UserUtil::getDefaultWebUser()->getIsGuest())
+		if (UserUtil::getDefaultWebUser()->getIsGuest())#未登录
 		{
-			if ($this->requiredAuth)
+			if ($this->requiredAuth)#是否需要认证
 			{
+                                #提示消息
 				Yii::app()->user->setFlash(Constants::WARNING_MESSAGE_ID, 'O recurso que você tentou acessar requer um usuário autenticado, por favor, faça a autenticação com o seu usuário.');
-				$this->redirect(array('/login/index'));
+				$this->redirect(array('/login/index'));#跳转登陆页面
 			}
 		}
 

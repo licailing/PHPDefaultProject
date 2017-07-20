@@ -4,21 +4,21 @@ class AdminFormController extends AdminController
 {
 	protected $moduleTitle = 'AdminFormController';
 
-	protected $formModel;
-	protected $formSearchModel;
-	protected $model;
+	protected $formModel;#表单模型名
+	protected $formSearchModel;#搜索模型名
+	protected $model;#保存model
 	protected $form;
-	protected $formSearch;
+	protected $formSearch;#保存搜索model
 
-	protected $arrConditions;
-	protected $arrParameters;
-	protected $arrParametersUrl;
-	protected $arrOrderField;
-	protected $arrRowCount;
-	protected $arrOrderDirection;
-	protected $orderFieldsForSearch;
-	protected $orderFieldDefaultForSearch;
-	protected $orderDirectionDefaultForSearch;
+	protected $arrConditions;#搜索条件
+	protected $arrParameters;#搜索绑定的参数
+	protected $arrParametersUrl;#保存分页对象url的查找数据
+	protected $arrOrderField;#可选排序字段
+	protected $arrRowCount;#可选每页条数
+	protected $arrOrderDirection;#可选排序方向
+	protected $orderFieldsForSearch;#字段排序
+	protected $orderFieldDefaultForSearch;#默认的排序字段
+	protected $orderDirectionDefaultForSearch;#默认的排序方向
 
 	protected $modelForSave;
 	protected $formModelForSave;
@@ -26,25 +26,24 @@ class AdminFormController extends AdminController
 	protected $formModelForUpdate;
 	protected $modelForView;
 
-	protected $renderData;
+	protected $renderData;#传入视图数据
 
-	protected $criteriaForSearch;
+	protected $criteriaForSearch;#保存搜索条件（criteria对象）
 
-	protected $storeAttributes = true;
-	protected $hasPagination   = true;
+	protected $storeAttributes = true;#存储属性
+	protected $hasPagination   = true;#分页
 
 	public function actionIndex()
 	{
 		if ($this->beforeActionIndex() == true)
 		{
+                        #搜索条件
 			if ($this->criteriaForSearch == null)
 			{
 				$this->criteriaForSearch = new CDbCriteria();
 			}
-
-			$model                  = new $this->model;
-			$this->formSearch       = new $this->formSearchModel;
-
+			$model                  = new $this->model;#model
+			$this->formSearch       = new $this->formSearchModel;#创建并初始化搜索model 会执行init函数
 			$this->arrConditions    = array();
 			$this->arrParameters    = array();
 			$this->arrParametersUrl = array();
@@ -52,7 +51,7 @@ class AdminFormController extends AdminController
 
 			$this->createParameters();
 
-			$this->criteriaForSearch->condition = implode(' AND ', $this->arrConditions);
+			$this->criteriaForSearch->condition = implode(' AND ', $this->arrConditions);#搜索条件
 			$this->criteriaForSearch->params    = $this->arrParameters;
 
 			$canProcessData = $this->actionIndexCanProcessData();
@@ -66,6 +65,7 @@ class AdminFormController extends AdminController
 			$this->arrOrderDirection = ComponentsForSearch::listForOrder();
 			$this->arrRowCount       = ComponentsForSearch::listForRowCount();
 
+                        #初始化搜索form属性
 			ComponentsForSearch::paramsForSearchQuery($this->formSearch, $this->criteriaForSearch, $this->arrParametersUrl, $this->orderFieldDefaultForSearch, $this->orderDirectionDefaultForSearch);
 
 			// cria paginação e limite de registros
@@ -87,13 +87,13 @@ class AdminFormController extends AdminController
 			// grava os objetos de pesquisa
 			if ($this->storeAttributes)
 			{
-				$this->formSearch->storeAttributes();
+				$this->formSearch->storeAttributes();#把搜索字段存入session
 			}
 
 			// cria objeto para o form
 			$list = array();
 
-			if ($canProcessData)
+			if ($canProcessData)#是否输出数据
 			{
 				$list = $model->findAll($this->criteriaForSearch);
 			}
@@ -101,12 +101,12 @@ class AdminFormController extends AdminController
 			// dados a serem renderizados
 			$this->renderData = array(
 				'moduleTitle'       => $this->moduleTitle,
-				'form'              => $this->formSearch,
-				'list'              => $list,
-				'arrOrderField'     => $this->arrOrderField,
-				'arrOrderDirection' => $this->arrOrderDirection,
-				'arrRowCount'       => $this->arrRowCount,
-				'pagination'        => ($this->hasPagination ? $pagination : null),
+				'form'              => $this->formSearch,#搜索form
+				'list'              => $list,#列表数据
+				'arrOrderField'     => $this->arrOrderField,#可选排序字段
+				'arrOrderDirection' => $this->arrOrderDirection,#可选排序方向
+				'arrRowCount'       => $this->arrRowCount,#可选每页条数
+				'pagination'        => ($this->hasPagination ? $pagination : null),#分页对象
 			);
 
 			if ($this->afterActionIndex())

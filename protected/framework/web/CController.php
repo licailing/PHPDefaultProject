@@ -963,7 +963,7 @@ class CController extends CBaseController
 	{
 		if($route==='')
 			$route=$this->getId().'/'.$this->getAction()->getId();
-		elseif(strpos($route,'/')===false)
+		elseif(strpos($route,'/')===false)#strpos($haystack,$needle,$offset)在$haystack查找$needle首次出现的位置
 			$route=$this->getId().'/'.$route;
 		if($route[0]!=='/' && ($module=$this->getModule())!==null)
 			$route=$module->getId().'/'.$route;

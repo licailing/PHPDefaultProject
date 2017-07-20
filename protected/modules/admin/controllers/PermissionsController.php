@@ -133,6 +133,7 @@ class PermissionsController extends AdminFormController
 
 			$modules = array_merge($modules, $this->getOtherPermissions());
 
+                        #清空表数据truncate table ...
 			if (isset($_POST['truncateTable']) && (int)$_POST['truncateTable'] == 1)
 			{
 				Yii::app()->db->createCommand()->truncateTable(Permission::model()->tableName());

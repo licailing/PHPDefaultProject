@@ -35,10 +35,10 @@ class CFormModel extends CModel
 	 */
 	public function __construct($scenario='')
 	{
-		$this->setScenario($scenario);
-		$this->init();
-		$this->attachBehaviors($this->behaviors());
-		$this->afterConstruct();
+		$this->setScenario($scenario);#设置场景
+		$this->init();#初始化
+		$this->attachBehaviors($this->behaviors());#注册行为
+		$this->afterConstruct();#触发onAfterConstruct事件
 	}
 
 	/**
