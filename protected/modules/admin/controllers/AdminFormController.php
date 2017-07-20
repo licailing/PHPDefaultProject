@@ -4,11 +4,12 @@ class AdminFormController extends AdminController
 {
 	protected $moduleTitle = 'AdminFormController';
 
-	protected $formModel;#表单模型名
-	protected $formSearchModel;#搜索模型名
-	protected $model;#保存model
+	protected $formModel;#用于创建列表页的搜索form表单名
+	protected $formSearchModel;#用于创建列表页的搜索form表单名
+	protected $model;#对应的数据表对象名
 	protected $form;
-	protected $formSearch;#保存搜索model
+        
+	protected $formSearch;#用于创建列表页的搜索form表单对象
 
 	protected $arrConditions;#搜索条件
 	protected $arrParameters;#搜索绑定的参数
@@ -20,11 +21,11 @@ class AdminFormController extends AdminController
 	protected $orderFieldDefaultForSearch;#默认的排序字段
 	protected $orderDirectionDefaultForSearch;#默认的排序方向
 
-	protected $modelForSave;
-	protected $formModelForSave;
+	protected $modelForSave;#用于保存添加的数据
+	protected $formModelForSave;#用于添加时创建form表单
 	protected $modelForUpdate;
 	protected $formModelForUpdate;
-	protected $modelForView;
+	protected $modelForView;#保存查看时
 
 	protected $renderData;#传入视图数据
 
