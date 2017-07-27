@@ -344,7 +344,7 @@ class CWebApplication extends CApplication
 			}
 			else
 				$controllerID.='/';
-			$className=ucfirst($id).'Controller';
+			$className=ucfirst($id).'Controller';#ucfirst首字母大写
 			$classFile=$basePath.DIRECTORY_SEPARATOR.$className.'.php';
 
 			if($owner->controllerNamespace!==null)
@@ -359,7 +359,7 @@ class CWebApplication extends CApplication
 					$id[0]=strtolower($id[0]);  #h:字符串的第一个字母
 					return array(
 						new $className($controllerID.$id,$owner===$this?null:$owner),
-						$this->parseActionParams($route),
+						$this->parseActionParams($route),#index
 					);
 				}
 				return null;

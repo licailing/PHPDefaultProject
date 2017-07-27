@@ -58,7 +58,7 @@ class YiiBase
 	 * The array keys are the class names and the array values are the corresponding class file paths.
 	 * @since 1.1.5
 	 */
-	public static $classMap=array();
+	public static $classMap=array();#自动载入
 	/**
 	 * @var boolean whether to rely on PHP include path to autoload class files. Defaults to true.
 	 * You may set this to be false if your hosting environment doesn't allow changing the PHP
@@ -397,9 +397,9 @@ class YiiBase
 	public static function autoload($className)     #这个类会在你实例化对象之前自动加载制定的文件(不在同一个目录)
 	{
 		// use include so that the error PHP file may appear
-		if(isset(self::$classMap[$className]))
+		if(isset(self::$classMap[$className]))#优先加载$classMap
 			include(self::$classMap[$className]);
-		elseif(isset(self::$_coreClasses[$className]))
+		elseif(isset(self::$_coreClasses[$className]))#加载$_coreClasses
 			include(YII_PATH.self::$_coreClasses[$className]);
 		else
 		{

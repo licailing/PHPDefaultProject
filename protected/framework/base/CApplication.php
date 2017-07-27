@@ -133,20 +133,20 @@ abstract class CApplication extends CModule     #应用基类
 			$config=require($config);
 		if(isset($config['basePath']))
 		{
-			$this->setBasePath($config['basePath']);
+			$this->setBasePath($config['basePath']);#protected
 			unset($config['basePath']);
 		}
 		else
 			$this->setBasePath('protected');
-		Yii::setPathOfAlias('application',$this->getBasePath());
-		Yii::setPathOfAlias('webroot',dirname($_SERVER['SCRIPT_FILENAME']));
+		Yii::setPathOfAlias('application',$this->getBasePath());#protected
+		Yii::setPathOfAlias('webroot',dirname($_SERVER['SCRIPT_FILENAME']));#根目录
 		if(isset($config['extensionPath']))
 		{
 			$this->setExtensionPath($config['extensionPath']);      #设置扩展路径别名
 			unset($config['extensionPath']);
 		}
 		else
-			Yii::setPathOfAlias('ext',$this->getBasePath().DIRECTORY_SEPARATOR.'extensions');
+			Yii::setPathOfAlias('ext',$this->getBasePath().DIRECTORY_SEPARATOR.'extensions');#protected/extensions
 		if(isset($config['aliases']))
 		{
 			$this->setAliases($config['aliases']);      #批量设置或重设别名
@@ -259,7 +259,7 @@ abstract class CApplication extends CModule     #应用基类
 	 */
 	public function setBasePath($path)
 	{
-		if(($this->_basePath=realpath($path))===false || !is_dir($this->_basePath))
+		if(($this->_basePath=realpath($path))===false || !is_dir($this->_basePath))#realpath返回规范化的绝对路径名
 			throw new CException(Yii::t('yii','Application base path "{path}" is not a valid directory.',
 				array('{path}'=>$path)));
 	}
